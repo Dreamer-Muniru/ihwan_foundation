@@ -115,28 +115,25 @@
                     <img src="img/contact.jpg" alt="Image">
                 </div>
                 <div class="contact-form">
-                        <div id="success"></div>
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                            <div class="control-group">
-                                <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <input type="text" class="form-control" id="subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject" />
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                <textarea class="form-control" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message"></textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div>
-                                <button class="btn btn-custom" type="submit" id="sendMessageButton">Send Message</button>
-                            </div>
-                        </form>
+                        
+                    <form id="contactForm">
+                        <div class="control-group">
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" required />
+                        </div>
+                        <div class="control-group">
+                            <input type="email" class="form-control" id="email" placeholder="Your Email" required />
+                        </div>
+                        <div class="control-group">
+                            <input type="text" class="form-control" id="subject" placeholder="Subject" required />
+                        </div>
+                        <div class="control-group">
+                            <textarea class="form-control" id="message" placeholder="Message" required></textarea>
+                        </div>
+                        <div>
+                            <button class="btn btn-custom" type="button" id="sendMessageButton">Send Message</button>
+                        </div>
+                    </form>
+                
                     </div>
             </div>
         </div>
@@ -214,7 +211,37 @@
         <div id="loader" class="show">
             <div class="loader"></div>
         </div>
-
+        <script>
+            document.getElementById('sendMessageButton').addEventListener('click', function () {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+            
+                // Construct the Google Form URL
+                const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLScPYJWdZrD8z81nLmryNDa3tLUKw17V0lKNKfmXyey8XIQJiw/formResponse";
+            
+                // Construct query parameters
+                const formData = new URLSearchParams();
+                formData.append("entry.1828935190", name);
+                formData.append("entry.694260703", email);
+                formData.append("entry.68989903", subject);
+                formData.append("entry.8960441", message);
+            
+                // Send data to Google Form
+                fetch(googleFormURL, {
+                    method: "POST",
+                    mode: "no-cors", // Prevent CORS issues
+                    body: formData,
+                })
+                    .then(() => {
+                        alert("Message sent successfully!");
+                    })
+                    .catch(() => {
+                        alert("There was an error sending your message. Please try again.");
+                    });
+            });
+            </script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
